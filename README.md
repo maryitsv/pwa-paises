@@ -25,3 +25,44 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+## pwa
+add the library
+`
+ng add @angular/pwa 
+`
+
+to see the angular application with the pwa we need to create a production build
+`
+ng build --configuration=production
+cd dist/paises
+http-server 
+`
+
+Now let review the app and understand a little the configuracion
+
+Review the ngsw-config.json 
+configure the assetGroups.urls to cache the urls like flags and like libraries
+create a new section to cache api calls dataGroups
+`
+ "urls": [
+          "https://flagcdn.com/**",
+          "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+        ]
+
+...
+
+  "dataGroups": [
+    {
+      "name": "pais-api",
+      "urls": ["https://restcountries.com/v2/lang/es"],
+      "cacheConfig": {
+        "maxSize": 5,
+        "maxAge": "1h",
+        "timeout": "5s",
+        "strategy": "freshness"
+      }
+    }
+  ]       
+`
